@@ -3,3 +3,12 @@
 
 ###
 GET {{endpoint}}
+
+###
+GET {{api}}
+
+###
+GET {{api}}/users
+
+###
+POST {{api}}/auth/register
