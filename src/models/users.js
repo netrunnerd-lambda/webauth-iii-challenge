@@ -13,12 +13,14 @@ exports.listByUsersDepartment = department => {
 
 exports.listByUserId = id => {
   return db
-          .where({ id });
+          .where({ id })
+          .first();
 };
 
 exports.listByUsername = username => {
   return db
-          .where({ username });
+          .where({ username })
+          .first();
 };
 
 exports.new = user => {
