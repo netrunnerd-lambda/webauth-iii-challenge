@@ -5,8 +5,11 @@ const json = express.json;
 const morgan = require('morgan');
 const session = require('express-session');
 const { sessionSecret } = require('./config/secrets');
+const sessionStore = require('connect-session-knex')(session);
 
 require('dotenv').config();
+
+const apiRoutes = require('./routes');
 
 const server = express();
 
@@ -18,7 +21,13 @@ const sessionOptions = {
   name: 'on-the-edge-of-destiny-stands-a-titan-at-war-with-himself',
   resave: false,
   saveUninitialized: false,
-  secret: sessionSecret
+  secret: sessionSecret,
+  store: new sessionStore({
+    createtable: true,
+    knex: require('./database'),
+    sidfieldname: 'session_id',
+    tablename: 'sessions'
+  })
 };
 
 server.use(cors());
@@ -32,5 +41,7 @@ server.get('/', (req, res) => res.json({
   message: 'Unauthorized use of this service will result in immediate termination.',
   success: true
 }));
+
+server.use('/api', apiRoutes);
 
 module.exports = server;
