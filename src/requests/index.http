@@ -1,0 +1,5 @@
+@endpoint = http://localhost:4500
+@api = {{endpoint}}/api
+
+###
+GET {{endpoint}}
