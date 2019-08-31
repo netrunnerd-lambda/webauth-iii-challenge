@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const users = require('../models/users');
+const { verifyToken } = require('../middleware');
 
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
   try {
-    const list = await users.list();
+    const list = await users.listByUsersDepartment(req.user.department);
 
     if (!list.length) {
       res.status(404).json({

@@ -1,6 +1,44 @@
 const bcrypt = require('bcrypt');
+const { generateToken } = require('../middleware');
 const router = require('express').Router();
 const users = require('../models/users');
+
+router.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const user = await users.listByUsername(username);
+
+    if (user && bcrypt.compareSync(password, user.password)) {
+      const { id, department } = user;
+
+      const load = {
+        subject: id,
+        username,
+        department
+      };
+
+      const token = generateToken(load);
+
+      res.json({
+        message: `Welcome ${username}...`,
+        success: true,
+        token
+      });
+    } else {
+      res.status(401).json({
+        message: "Invalid credentials.",
+        success: false
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      error,
+      message: "You shall not pass!",
+      success: false
+    });
+  }
+});
 
 router.post('/register', async (req, res) => {
   let user = req.body;
