@@ -1,0 +1,31 @@
+@endpoint = http://localhost:4500
+@api = {{endpoint}}/api
+
+###
+GET {{endpoint}}
+
+###
+GET {{api}}
+
+###
+GET {{api}}/users
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijo3LCJ1c2VybmFtZSI6IldKIiwiZGVwYXJ0bWVudCI6InNlY3VyaXR5IiwiaWF0IjoxNTY3MTM3MjA5LCJleHAiOjE1NjcxNDA4MDl9.VogDpakXa8iX5EWgMPvvFYGhS4-RohMNIn8tFtxZqtg
+
+###
+POST {{api}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "WJ",
+  "password": "password",
+  "department": "security"
+}
+
+###
+POST {{api}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "WJ",
+  "password": "password"
+}
